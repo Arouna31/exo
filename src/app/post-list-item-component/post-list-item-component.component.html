@@ -1,13 +1,7 @@
 <div class="list-group-item">
-  <h3>Titre <cite><span class="float-right">date</span></cite>
+  <h3>{{ getPost.title }} <cite><span class="float-right date"> {{ getPost.created_at | date: 'short'}}</span></cite>
   </h3>
-  <p>jbnjkf dkjbfdjbfdkj bnfkjdfkjdbn jbnfkjd</p>
-  <button class="btn btn-success">j'aime !</button>
-  <button class="btn btn-danger" style="margin-left: 10px;">je n'aime pas !</button>
-</div>
-<div class="list-group-item">
-  <h3>Titre <span class="float-right">date</span></h3>
-  <p>jbnjkf dkjbfdjbfdkj bnfkjdfkjdbn jbnfkjd</p>
+  <p>{{ getPost.content }}</p>
   <button class="btn btn-success">j'aime !</button>
   <button class="btn btn-danger" style="margin-left: 10px;">je n'aime pas !</button>
 </div>
