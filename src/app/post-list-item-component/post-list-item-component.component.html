@@ -1,7 +1,8 @@
-<div class="list-group-item">
+<div class="list-group-item" [ngClass]="{'list-group-item-success': getPost.loveIts > 0,
+    'list-group-item-danger': getPost.loveIts < 0}">
   <h3>{{ getPost.title }} <cite><span class="float-right date"> {{ getPost.created_at | date: 'short'}}</span></cite>
   </h3>
   <p>{{ getPost.content }}</p>
-  <button class="btn btn-success">j'aime !</button>
-  <button class="btn btn-danger" style="margin-left: 10px;">je n'aime pas !</button>
+  <button class="btn btn-success" (click)="onLike()">j'aime !</button>
+  <button class="btn btn-danger" style="margin-left: 10px;" (click)="onUnlike()">je n'aime pas !</button>
 </div>

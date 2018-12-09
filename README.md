@@ -1,2 +1,2 @@
 # exo
-Application project #Learning Angular Framework form Openclassrooms plateform
+Application project #Learning Angular Framework
