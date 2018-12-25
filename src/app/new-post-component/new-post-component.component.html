@@ -1,0 +1,14 @@
+<div class="container col-xs-8">
+  <h3>Nouveau post</h3>
+  <form [formGroup]="postForm" (ngSubmit)="onAddPost()">
+    <div class="from-group">
+      <label for="title">Titre</label>
+      <input type="text" name="title" id="title" class="form-control" formControlName="title">
+    </div>
+    <div class="from-group">
+      <label for="content">Contenu</label>
+      <input type="text" name="content" id="content" class="form-control" formControlName="content">
+    </div>
+    <button style="margin-top: 5px;" class="btn btn-secondary" [disabled]="postForm.invalid" type="submit">Ajouter le post</button>
+  </form>
+</div>
