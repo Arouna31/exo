@@ -9,22 +9,21 @@ import { PostsService } from "../services/posts.service";
 })
 export class PostListItemComponentComponent implements OnInit {
   @Input() getPost: Post;
-  @Input() id: number;
+  @Input() postId: number;
 
   constructor(private postsService: PostsService) {}
 
   ngOnInit() {}
 
   onLike() {
-    this.getPost.loveIts++;
+    this.postsService.likePost(this.postId);
   }
 
   onUnlike() {
-    this.getPost.loveIts--;
+    this.postsService.unlikePost(this.postId);
   }
 
-  onDeletePost(id: number) {
-    this.postsService.removePost(id);
-    this.postsService.emitPosts();
+  onDeletePost(postId: number) {
+    this.postsService.removePost(postId);
   }
 }

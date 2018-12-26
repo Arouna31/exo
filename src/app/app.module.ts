@@ -9,6 +9,7 @@ import { NewPostComponentComponent } from "./new-post-component/new-post-compone
 import { PostsService } from "./services/posts.service";
 import { Routes, RouterModule } from "@angular/router";
 import { HeaderComponent } from "./header/header.component";
+import { HttpClientModule } from "@angular/common/http";
 
 const appRoutes: Routes = [
   {
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
+    HttpClientModule,
     FormsModule
   ],
   providers: [PostsService],

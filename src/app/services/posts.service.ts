@@ -1,33 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Post } from "../Post";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class PostsService {
-  posts: Post[] = [
-    new Post(
-      1,
-      "Mon premier post",
-      "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.",
-      10,
-      new Date()
-    ),
-    new Post(
-      2,
-      "Mon deuxième post",
-      "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.",
-      -3,
-      new Date()
-    ),
-    new Post(
-      3,
-      "Encore un post",
-      "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.",
-      0,
-      new Date()
-    )
-  ];
+  posts: Post[];
   postsSubject = new Subject<Post[]>();
+
+  constructor(private httpClient: HttpClient) {}
 
   emitPosts() {
     this.postsSubject.next(this.posts);
@@ -38,8 +19,54 @@ export class PostsService {
     this.emitPosts();
   }
 
-  removePost(id: number) {
-    this.posts.splice(id, 1);
+  savePostOnServer() {
+    this.httpClient
+      .put("https://post-aa9d5.firebaseio.com/posts.json", this.posts)
+      .subscribe(
+        () => {
+          console.log("Données enregistrées");
+        },
+        error => {
+          console.log(`Une erreur est survenue : ${error}`);
+        }
+      );
+
+    this.emitPosts();
+  }
+
+  getPostOnServer() {
+    this.httpClient
+      .get<any[]>("https://post-aa9d5.firebaseio.com/posts.json")
+      .subscribe(
+        posts => {
+          this.posts = posts;
+          this.emitPosts();
+        },
+        error => {
+          console.log(`Une erreur s'est produite ${error}`);
+        }
+      );
+  }
+
+  removePost(postId: number) {
+    this.posts.splice(postId, 1);
+    this.savePostOnServer();
+    this.emitPosts();
+  }
+
+  likePost(postId: number) {
+    const postIdInPostsArray: number = postId--;
+
+    this.posts[postIdInPostsArray].loveIts++;
+    this.savePostOnServer();
+    this.emitPosts();
+  }
+
+  unlikePost(postId: number) {
+    const postIdInPostsArray: number = postId--;
+
+    this.posts[postIdInPostsArray].loveIts--;
+    this.savePostOnServer();
     this.emitPosts();
   }
 }

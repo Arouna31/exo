@@ -23,7 +23,9 @@ export class PostListComponentComponent implements OnInit {
         this.posts = posts;
       }
     );
-    this.postsService.emitPosts();
+    this.postsService.getPostOnServer();
+    /*     this.postsService.emitPosts();
+     */
   }
 
   ngOnDestroy(): void {

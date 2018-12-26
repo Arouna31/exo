@@ -32,11 +32,12 @@ export class NewPostComponentComponent implements OnInit {
   onAddPost() {
     const title = this.postForm.get("title").value;
     const content = this.postForm.get("content").value;
-    const id = this.postsService.posts.length + 1;
-    const newPost: Post = new Post(id, title, content, 0, new Date());
+    const postId =
+      this.postsService.posts[this.postsService.posts.length - 1].id + 1;
+    const newPost: Post = new Post(postId, title, content, 0, new Date());
 
     this.postsService.addNewPost(newPost);
-    this.postsService.emitPosts();
+    this.postsService.savePostOnServer();
     this.router.navigate(["/posts"]);
   }
 }
